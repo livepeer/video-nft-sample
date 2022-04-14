@@ -10,8 +10,6 @@
 </head>
 
 
-
-
 <script>
 
     let ethereum;
@@ -27,13 +25,17 @@
 
     }
 
+
+
     async function handleFiles(files) {
         const minter = new videonft.minter.FullMinter(apiOpts, { ethereum, chainId });
         const file = files[0]
 
         files = [...files]
         console.log(files)
-        //initializeProgress(files.length)
+        initializeProgress(files.length)
+        files.forEach(uploadFile)
+
         //files.forEach(uploadFile)
         //files.forEach(previewFile)
         // console.log(file)
@@ -77,29 +79,34 @@
         return nftInfo;
     }
 </script>
-<html lang="en" class="dark">
+<html lang="en" >
 
 <body>
-    <div class="relative flex min-h-screen flex-col justify-center overflow-hidden dark:bg-gray-900 py-6 sm:py-12">
+    <div class="relative flex min-h-screen flex-col justify-center overflow-hidden dark:bg-[#161618] py-6 sm:py-12">
         <div
-            class="relative bg-white dark:bg-slate-900 px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
+            class="relative bg-[#1c1c1f] px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 w-9/12">
             <div class="mx-auto max-w-md">
                 <div class=" text-base font-semibold leading-7">
                     <p class="text-white">Upload Video</p>
                 </div>
                 <div class="divide-y divide-gray-300/50">
                     <div class="space-y-6 py-8 text-base leading-7 text-white">
-
                         <div class=" text-base font-semibold leading-7">
                             <p class="text-white">Attach Video</p>
                         </div>
                         <section id="drop-area"
-                            class="outline-dashed outline-2 outline-offset-2 outline-white p-2 rounded-md">
-                            <input class="h-32 w-full" type="file" id="file" accept="video/mp4"
-                                onchange="handleFiles(this.files)">
+                            class="outline-dashed outline-2 outline-offset-2 outline-white p-2 rounded-md  justify-center h-32 w-full">
+                                <input class="h-32 w-full" type="file" id="file" accept="video/mp4"
+                                onchange="handleFiles(this.files)" style="display:none;">
+                                <p>Drag and Drop Here</p>
+                                <label  for="file">Upload</label>
                         </section>
+                       
                         <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                            <div class="bg-[#00eb88] h-2.5 rounded-full" style="width: 45%"></div>
+                            <div id="progress-bar" class="transition-all ease-out duration-1000 bg-[#00eb88] h-2.5 rounded-full" style="width:0%"></div>
+                        </div>
+                        <div class=" text-base  leading-7">
+                            <p class="text-white">Accepted Files Type: .mp4 only</p>
                         </div>
                     </div>
 
@@ -178,6 +185,28 @@
         var files = dt.files
 
         handleFiles(files)
+    }
+
+    let uploadProgress = []
+    let progressBar = document.getElementById('progress-bar')
+
+    function initializeProgress(numFiles) {
+        progressBar.style.width = "0%";
+        uploadProgress = []
+
+        for (let i = numFiles; i > 0; i--) {
+            uploadProgress.push(0)
+        }
+    }
+
+    function updateProgress(fileNumber, percent) {
+        uploadProgress[fileNumber] = percent
+        let total = uploadProgress.reduce((tot, curr) => tot + curr, 0) / uploadProgress.length
+        progressBar.style.width = `${total}%`;
+    }
+
+    function uploadFile(file, i) {
+        updateProgress(i, 100)
     }
 </script>
 
