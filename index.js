@@ -11,6 +11,7 @@ const proxy = createProxyMiddleware({
         authorization:  `Bearer  ${process.env.LP_API_KEY}`
     }
 });
+app.use(express.static('public'))
 
 
 
