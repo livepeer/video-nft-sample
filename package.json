@@ -1,0 +1,16 @@
+{
+  "name": "livepeer-video-nft-sample",
+  "version": "1.0.0",
+  "main": "index.js",
+  "engines": {
+    "node" : "14.x"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.3",
+    "http-proxy-middleware": "^2.0.4"
+  }
+}
