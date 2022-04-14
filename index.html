@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
-<html lang="en" >
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,65 +9,6 @@
     <script src="https://unpkg.com/@livepeer/video-nft@0.3.2/dist/index.umd.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
-
-<script>
-
-    let ethereum;
-    let chainId;
-    let videoFile;
-
-    const apiOpts = {};
-
-    async function connect() {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        ethereum = window.ethereum;
-        chainId = window.ethereum.chainId
-        console.log(ethereum, chainId)
-
-    }
-
-
-
-    async function handleFiles(files) {
-        const minter = new videonft.minter.FullMinter(apiOpts, { ethereum, chainId });
-        const file = files[0]
-
-        files = [...files]
-        console.log(files)
-        initializeProgress(files.length)
-        files.forEach(uploadFile)
-
-    }
-
-    async function mintNft() {
-
-        console.log(ethereum, chainId)
-        const minter = new videonft.minter.FullMinter(apiOpts, { ethereum, chainId });
-        //file = await minter.uploader.pickFile();
-        let file = document.getElementById('file').files[0];
-        let title = document.getElementById("title").value;
-        console.log(title)
-        console.log(file)
-        let asset = await minter.api.createAsset(title, file);
-        console.log(asset);
-        // optional, optimizes the video for the NFT
-        asset = await minter.api.nftNormalize(asset);
-        console.log(asset)
-        const nftMetadata = {
-            description: 'My NFT description',
-            traits: { 'my-custom-trait': 'my-custom-value' }
-        };
-        console.log(nftMetadata)
-        const ipfs = await minter.api.exportToIPFS(asset.id, nftMetadata);
-        console.log(ipfs);
-        const tx = await minter.web3.mintNft(ipfs.nftMetadataUrl);
-        const nftInfo = await minter.web3.getMintedNftInfo(tx);
-        console.log(`minted NFT on contract ${nftInfo.contractAddress} with ID ${nftInfo.tokenId}`);
-        return nftInfo;
-    }
-</script>
-
 
 <body>
     <div class="relative flex min-h-screen flex-col justify-center overflow-hidden dark:bg-[#161618] py-6 sm:py-12">
@@ -78,37 +20,45 @@
                 </div>
                 <div class="divide-y divide-gray-300/50">
                     <div class="space-y-6 py-8 text-base leading-7 text-white">
-                        
+
                         <div class="mb-4">
                             <label class="" for="title">
                                 NFT Title
                             </label>
-                            <input class="shadow bg-transparent  border rounded w-full py-2 px-3 text-[#00eb88] leading-tight focus:outline-none focus:shadow-outline" id="title" type="text" placeholder="NFT Title">
-                          </div>
-           
+                            <input
+                                class="shadow bg-transparent  border rounded w-full py-2 px-3 text-[#00eb88] leading-tight focus:outline-none focus:shadow-outline"
+                                id="title" type="text" placeholder="NFT Title">
+                        </div>
+
 
                         <div class=" text-base font-semibold leading-7">
                             <p class="text-white">Attach Video</p>
                         </div>
                         <section id="drop-area"
                             class="outline-dashed outline-2 outline-offset-2 outline-white p-2 rounded-md  justify-center h-32 w-full">
-                                <input class="h-32 w-full" type="file" id="file" accept="video/mp4"
+                            <input class="h-32 w-full" type="file" id="file" accept="video/mp4"
                                 onchange="handleFiles(this.files)" style="display:none;">
-                                <p>Drag and Drop Here</p>
-                                <label  for="file">Upload</label>
+                            <p>Drag and Drop Here</p>
+                            <label for="file">Upload</label>
                         </section>
-                       
+
                         <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                            <div id="progress-bar" class="transition-all ease-out duration-1000 bg-[#00eb88] h-2.5 rounded-full" style="width:0%"></div>
+                            <div id="progress-bar"
+                                class="transition-all ease-out duration-1000 bg-[#00eb88] h-2.5 rounded-full"
+                                style="width:0%"></div>
                         </div>
                         <div class=" text-base  leading-7">
-                            <p class="text-white">Accepted Video Files Type 🎥📁 : <span class="text-[#00eb88] ">.mp4 only</span></p>
-                            <p class="text-white">Accepted Chain ⛓️: <span class="text-[#8e7ee3]">Polygon blockchain</span></p>
+                            <p class="text-white">Accepted Video Files Type 🎥📁 : <span class="text-[#00eb88] ">.mp4
+                                    only</span></p>
+                            <p class="text-white">Accepted Chain ⛓️: <span class="text-[#8e7ee3]">Polygon
+                                    blockchain</span></p>
                         </div>
-                        <button onClick="connect()" class="bg-transparent hover:bg-[#00eb88] text-[#00eb88]  font-semibold hover:text-white py-2 px-4 border border-[#00eb88]  hover:border-transparent rounded w-full">
+                        <!-- <button onClick="connect()" class="bg-transparent hover:bg-[#00eb88] text-[#00eb88]  font-semibold hover:text-white py-2 px-4 border border-[#00eb88]  hover:border-transparent rounded w-full">
                             Connect Wallet 🦊
-                          </button>
-                          <button class="bg-transparent hover:bg-[#00eb88] text-[#00eb88]  font-semibold hover:text-white py-2 px-4 border border-[#00eb88]  hover:border-transparent rounded w-full"  onClick="mintNft()">Mint</button>
+                          </button> -->
+                        <button
+                            class="bg-transparent hover:bg-[#00eb88] text-[#00eb88]  font-semibold hover:text-white py-2 px-4 border border-[#00eb88]  hover:border-transparent rounded w-full"
+                            onClick="mintNft()">Mint</button>
                     </div>
 
                 </div>
@@ -117,7 +67,7 @@
     </div>
 
 </body>
-<script>
+<script type="text/javascript">
     let dropArea = document.getElementById("drop-area");
 
     // Prevent default drag behaviors
@@ -145,8 +95,6 @@
         dropArea.classList.remove('outline-[#00eb88]')
     }
 
-    // Handle dropped files
-    console.log(dropArea);
     dropArea.addEventListener('drop', handleDrop, false)
 
     function preventDefaults(e) {
@@ -182,6 +130,73 @@
     function uploadFile(file, i) {
         updateProgress(i, 100)
     }
+
+    async function handleFiles(files) {
+        const file = files[0]
+
+        files = [...files]
+        console.log(files)
+        initializeProgress(files.length)
+        files.forEach(uploadFile)
+
+    }
 </script>
+
+
+<script type="text/javascript">
+
+    const apiOpts = {};
+
+    async function mintNft() {
+        const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
+
+
+        // Prompt user for account connections
+        await provider.send("eth_requestAccounts", []);
+        let ethereum = window.ethereum;
+        let chainId = window.ethereum.chainId;
+        
+
+        const signer = provider.getSigner();
+        console.log("Account:", await signer.getAddress());
+        //const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        console.log(ethereum)
+        console.log(chainId);
+
+        const minter = new videonft.minter.FullMinter(apiOpts, { ethereum, chainId });
+        // //file = await minter.uploader.pickFile();
+        console.log(minter);
+        let file = document.getElementById('file').files[0];
+        let title = document.getElementById("title").value || "My NFT";
+        console.log(title)
+        console.log(file)
+        let asset = await minter.api.createAsset(title, file);
+        console.log(asset);
+        // // optional, optimizes the video for the NFT
+        asset = await minter.api.nftNormalize(asset);
+        console.log(asset)
+        const nftMetadata = {
+            description: 'My NFT description',
+            traits: { 'my-custom-trait': 'my-custom-value' }
+        };
+        console.log(nftMetadata)
+
+        const nftInfo = await minter.createNft({
+            name: 'My NFT',
+            file,
+            nftMetadata
+        });
+        console.log(`minted NFT on contract ${nftInfo.contractAddress} with ID ${nftInfo.tokenId}`);
+        //return nftInfo;
+        // const ipfs = await minter.api.exportToIPFS(asset.id, nftMetadata);
+        // console.log(ipfs);
+
+        // const tx = await minter.web3.mintNft(ipfs.nftMetadataUrl);
+        // const nftInfo = await minter.web3.getMintedNftInfo(tx);
+        // console.log(`minted NFT on contract ${nftInfo.contractAddress} with ID ${nftInfo.tokenId}`);
+        // return nftInfo;
+    }
+</script>
+
 
 </html>
