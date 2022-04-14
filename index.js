@@ -3,6 +3,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const path = require('path');
 const app = express();
 require('dotenv').config();
+const PORT = process.env.PORT || 3000;
 const proxy = createProxyMiddleware({
     target: 'https://livepeer.com',
     changeOrigin: true,
@@ -11,7 +12,6 @@ const proxy = createProxyMiddleware({
     }
 });
 
-console.log(process.env.LP_API_KEY)
 
 
 
@@ -25,5 +25,5 @@ app.post('/api/asset/request-upload', proxy);
 app.post('/api/asset/transcode', proxy);
 app.post('/api/asset/:id/export', proxy);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`gm ${PORT}!`));
+
+app.listen(PORT);

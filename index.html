@@ -14,6 +14,7 @@
 
     let ethereum;
     let chainId;
+    let videoFile;
 
     const apiOpts = {};
 
@@ -58,19 +59,21 @@
     }
 
     async function mintNft() {
+        const file = document.getElementById('file').files[0];
         console.log(ethereum, chainId)
         const minter = new videonft.minter.FullMinter(apiOpts, { ethereum, chainId });
-        const file = await minter.uploader.pickFile();
+        //const file = await minter.uploader.pickFile();
         console.log(file)
         let asset = await minter.api.createAsset('My NFT', file);
-        console.log(asset)
+
         // optional, optimizes the video for the NFT
         asset = await minter.api.nftNormalize(asset);
-
+        console.log(asset)
         const nftMetadata = {
             description: 'My NFT description',
             traits: { 'my-custom-trait': 'my-custom-value' }
         };
+        console.log(nftMetadata)
         const ipfs = await minter.api.exportToIPFS(asset.id, nftMetadata);
         console.log(ipfs);
         const tx = await minter.web3.mintNft(ipfs.nftMetadataUrl);
@@ -112,6 +115,7 @@
                         <button onClick="connect()" class="bg-transparent hover:bg-[#00eb88] text-[#00eb88]  font-semibold hover:text-white py-2 px-4 border border-[#00eb88]  hover:border-transparent rounded w-full">
                             Connect Wallet 🦊
                           </button>
+                          <button class="bg-transparent hover:bg-[#00eb88] text-[#00eb88]  font-semibold hover:text-white py-2 px-4 border border-[#00eb88]  hover:border-transparent rounded w-full"  onClick="mintNft()">Mint</button>
                     </div>
 
                 </div>
