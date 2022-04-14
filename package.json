@@ -2,9 +2,6 @@
   "name": "livepeer-video-nft-sample",
   "version": "1.0.0",
   "main": "index.js",
-  "engines": {
-    "node" : "14.x"
-  },
   "scripts": {
     "start": "node index.js"
   },
@@ -12,5 +9,15 @@
   "dependencies": {
     "express": "^4.17.3",
     "http-proxy-middleware": "^2.0.4"
-  }
+  },
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codentell/video-nft-sample.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/codentell/video-nft-sample/issues"
+  },
+  "homepage": "https://github.com/codentell/video-nft-sample#readme"
 }
