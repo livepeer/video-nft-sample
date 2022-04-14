@@ -37,35 +37,19 @@
         initializeProgress(files.length)
         files.forEach(uploadFile)
 
-        //files.forEach(uploadFile)
-        //files.forEach(previewFile)
-        // console.log(file)
-        // let asset = await minter.api.createAsset('My NFT', file);
-        // console.log(asset)
-        // // optional, optimizes the video for the NFT
-        // asset = await minter.api.nftNormalize(asset);
-
-        // const nftMetadata = {
-        //     description: 'My NFT description',
-        //     traits: { 'my-custom-trait': 'my-custom-value' }
-        // };
-        // const ipfs = await minter.api.exportToIPFS(asset.id, nftMetadata);
-        // console.log(ipfs);
-        // const tx = await minter.web3.mintNft(ipfs.nftMetadataUrl);
-        // const nftInfo = await minter.web3.getMintedNftInfo(tx);
-        // console.log(`minted NFT on contract ${nftInfo.contractAddress} with ID ${nftInfo.tokenId}`);
-        // return nftInfo;
-
     }
 
     async function mintNft() {
-        const file = document.getElementById('file').files[0];
+
         console.log(ethereum, chainId)
         const minter = new videonft.minter.FullMinter(apiOpts, { ethereum, chainId });
-        //const file = await minter.uploader.pickFile();
+        //file = await minter.uploader.pickFile();
+        let file = document.getElementById('file').files[0];
+        let title = document.getElementById("title").value;
+        console.log(title)
         console.log(file)
-        let asset = await minter.api.createAsset('My NFT', file);
-
+        let asset = await minter.api.createAsset(title, file);
+        console.log(asset);
         // optional, optimizes the video for the NFT
         asset = await minter.api.nftNormalize(asset);
         console.log(asset)
@@ -94,6 +78,15 @@
                 </div>
                 <div class="divide-y divide-gray-300/50">
                     <div class="space-y-6 py-8 text-base leading-7 text-white">
+                        
+                        <div class="mb-4">
+                            <label class="" for="title">
+                                NFT Title
+                            </label>
+                            <input class="shadow bg-transparent  border rounded w-full py-2 px-3 text-[#00eb88] leading-tight focus:outline-none focus:shadow-outline" id="title" type="text" placeholder="NFT Title">
+                          </div>
+           
+
                         <div class=" text-base font-semibold leading-7">
                             <p class="text-white">Attach Video</p>
                         </div>
@@ -122,32 +115,6 @@
             </div>
         </div>
     </div>
-    <!-- <section>
-
-        <h1>Upload Video</h1>
-
-        <form>
-            <label>Video NFT Title</label>
-            <input type="text" />
-
-            <section id="drop-area">
-                <label>Attach Video</label>
-                <input type="file" id="file" accept="video/mp4" onchange="handleFiles(this.files)">
-                <progress id="progress-bar" max=100 value=0></progress>
-            </section>
-
-
-
-        </form>
-
-
-
-
-
-
-    </section>
-    <button onClick="connect()">Connect</button>
-    <button onClick="mintNft()">Upload</button> -->
 
 </body>
 <script>
