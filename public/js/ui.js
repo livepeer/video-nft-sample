@@ -72,5 +72,4 @@ async function handleFiles(files) {
 }
 
 
-document.getElementById("file").addEventListener("onchange", handleFiles);
-alert("Check")
+
