@@ -62,6 +62,7 @@ function uploadFile(file, i) {
 }
 
 async function handleFiles(files) {
+    console.log(files)
     const file = files[0]
 
     files = [...files]
@@ -70,6 +71,5 @@ async function handleFiles(files) {
     files.forEach(uploadFile)
 
 }
-
 
 
