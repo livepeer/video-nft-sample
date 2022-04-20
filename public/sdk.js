@@ -13,12 +13,11 @@ async function mintNft() {
 
     const signer = provider.getSigner();
     console.log("Account:", await signer.getAddress());
-    //const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
     console.log(ethereum)
     console.log(chainId);
 
     const minter = new videonft.minter.FullMinter(apiOpts, { ethereum, chainId });
-    // //file = await minter.uploader.pickFile();
+
     console.log(minter);
     let file = document.getElementById('file').files[0];
     let title = document.getElementById("title").value || "My NFT";
