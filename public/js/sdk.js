@@ -1,9 +1,7 @@
-
 const apiOpts = {};
 
 async function mintNft() {
     const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
-
 
     // Prompt user for account connections
     await provider.send("eth_requestAccounts", []);
@@ -35,7 +33,7 @@ async function mintNft() {
     console.log(nftMetadata)
 
     const nftInfo = await minter.createNft({
-        name: 'My NFT',
+        name: title,
         file,
         nftMetadata
     });
