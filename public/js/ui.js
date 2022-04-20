@@ -61,7 +61,7 @@ function uploadFile(file, i) {
     updateProgress(i, 100)
 }
 
-function handleFiles(files) {
+async function handleFiles(files) {
     console.log(files)
     const file = files[0]
 
