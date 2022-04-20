@@ -41,12 +41,5 @@ async function mintNft() {
         nftMetadata
     });
     console.log(`minted NFT on contract ${nftInfo.contractAddress} with ID ${nftInfo.tokenId}`);
-    //return nftInfo;
-    // const ipfs = await minter.api.exportToIPFS(asset.id, nftMetadata);
-    // console.log(ipfs);
-
-    // const tx = await minter.web3.mintNft(ipfs.nftMetadataUrl);
-    // const nftInfo = await minter.web3.getMintedNftInfo(tx);
-    // console.log(`minted NFT on contract ${nftInfo.contractAddress} with ID ${nftInfo.tokenId}`);
-    // return nftInfo;
+    return nftInfo;
 }
