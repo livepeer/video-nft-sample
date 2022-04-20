@@ -1,4 +1,6 @@
 let dropArea = document.getElementById("drop-area");
+const videoSrc = document.querySelector("#video-source");
+const videoTag = document.querySelector("#video-tag");
 
 // Prevent default drag behaviors
 ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -69,6 +71,17 @@ async function handleFiles(files) {
     console.log(files)
     initializeProgress(files.length)
     files.forEach(uploadFile)
+
+    if (files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            videoSrc.src = e.target.result
+            videoTag.load()
+        }.bind(this)
+
+        reader.readAsDataURL(files[0]);
+    }
 
 }
 
