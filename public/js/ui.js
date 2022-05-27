@@ -64,8 +64,10 @@ function uploadFile(file, i) {
 }
 
 async function handleFiles(files) {
-    console.log(files)
+    console.log("files: ", files);
     const file = files[0]
+    window.livepeer = window.livepeer || {}
+    window.livepeer.files = files;
 
     files = [...files]
     console.log(files)
