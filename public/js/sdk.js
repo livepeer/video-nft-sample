@@ -17,12 +17,20 @@ async function mintNft() {
     const minter = new videonft.minter.FullMinter(apiOpts, { ethereum, chainId });
 
     console.log(minter);
-    let file = document.getElementById('file').files[0];
+    // let file = document.getElementById('file').files[0];
+    let file = window.livepeer.files[0];
+    // console.log('file object', document.getElementById('file'));
     let title = document.getElementById("title").value || "My NFT";
     console.log(title)
     console.log(file)
-    let asset = await minter.api.createAsset(title, file);
-    console.log(asset);
+    console.log('create asset', minter.api.createAsset);
+    let progressBar = document.getElementById('progress-bar')
+
+    let asset = await minter.api.createAsset(title, file, (progress) => {
+        console.log('progress: ', progress)
+        progressBar.style.width = `${progress * 100 }%`;
+    });
+    console.log("asset", asset);
     // // optional, optimizes the video for the NFT
     asset = await minter.api.nftNormalize(asset);
     console.log(asset)
@@ -30,7 +38,7 @@ async function mintNft() {
         description: 'My NFT description',
         traits: { 'my-custom-trait': 'my-custom-value' }
     };
-    console.log(nftMetadata)
+    console.log("metadata", nftMetadata)
 
     const nftInfo = await minter.createNft({
         name: title,
