@@ -44,11 +44,9 @@ async function mintNft() {
     };
     console.log("metadata", nftMetadata)
 
-    const nftInfo = await minter.createNft({
-        name: title,
-        file,
-        nftMetadata
-    });
+    const { nftMetadataUrl } = await minter.api.exportToIPFS(asset.id, nftMetadata);
+	const tx = await this.web3.mintNft(nftMetadataUrl);
+	const nftInfo = await this.web3.getMintedNftInfo(tx);
 
     mintBtn.innerText = `Minted Video with ID ${nftInfo.tokenId}`;
     console.log(`minted NFT on contract ${nftInfo.contractAddress} with ID ${nftInfo.tokenId}`);
